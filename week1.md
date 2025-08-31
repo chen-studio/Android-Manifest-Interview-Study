@@ -82,3 +82,55 @@ camera_module_t HAL_MODULE_INFO_SYM = {
 - IBinder를 통해 보낼 수 있는 메시지의 컨테이너
 - 안드로이드는 프로세스간 데이터 전달 (IPC)에서 바인더를 통해 Parcel 객체를 전달
 - Parcelable은 Parcel에 객체를 write/read 할 수 있도록 해준다
+
+### ContextWrapper
+- ContextWrapper는 Context를 상속받고 있는 클래스로, Context 객체를 감싸서(wrapping) 래핑된 Context에 대한 호출을 위임하는 기능을 제공합니다.
+- 이는 원본 Context의 동작을 수정하거나 확장하기 위한 중간 계층 역할을 합니다.
+-  ContextWrapper를 사용하면 Context와 직접적인 소통을 하지 않고도 특정 기능을 커스텀할 수 있습니다.
+#### ContextWrapper의 목적
+- ContextWrapper는 기존 Context의 특정 동작을 개선시키거나 재정의해야 할 때 사용됩니다.
+- Context에 대한 호출을 중개하고 추가 기능이나 커스텀 동작을 제공하는 목적으로 많이 사용됩니다.
+사용 사례
+1. 커스텀 컨텍스트: 앱 전체에 다른 테마를 적용하거나 리소스를 특수한 방식으로 처리
+하는 등 특정 목적을 위한 커스텀 Context를 생성해야 하는 경우.
+2. 동적 리소스 처리: 문자열, 치수(dimension) 또는 스타일(style)과 같은 리소스를
+동적으로 제공하거나 수정하기 위해 Context를 래핑하는 경우.
+3. 의존성 주입: Dagger나 Hilt와 같은 라이브러리는 의존성 주입을 위해 커스텀
+ContextWrapper를 생성하고, 컴포넌트에 해당 ContextWrapper를 Context 타입으로 제공합니다
+
+#### Custom Context Wrapper 예시
+```.kt
+class CustomThemeContextWrapper(base: Context) : ContextWrapper(base) {
+  private var theme: Resources.Theme? = null
+
+  override fun getTheme(): Resources.Theme {
+    if (theme == null) {
+      theme = super.getTheme()
+      theme?.applyStyle(R.style.CustomTheme, true) // 커스텀 테마 적용
+    }
+    return theme!!
+}
+
+  override fun setTheme(themeResId: Int) {
+    theme = null
+    super.setTheme(themeResId)
+  }
+```
+
+### Activity A, B 생명주기 흐름 순서
+Activity A와 Activity B의 생명주기 흐름 순서
+• Activity A의 초기 실행
+– Activity A: 처음에 실행될 때 onCreate() ‑> onStart() ‑> onResume() 순서로
+호출 되고, 사용자가 Activity A와 상호 작용할 수 있습니다.
+• Activity A에서 Activity B로 이동
+– Activity A: onPause(), UI를 일시 중지하고 시각적으로 보이는 상태 관련 리소스를
+해제합니다.
+– Activity B: onCreate() ‑> onStart() ‑> onResume(), 포커스를 가져오고 포그라
+운드 Activity가 됩니다.
+– Activity A: onStop(), Activity B가 Activity A를 완전히 오버레이 하는 순간
+호출됩니다.
+• Activity B에서 Activity A로 돌아오는 경우
+– Activity B: onPause()
+– Activity A: onRestart() ‑> onStart() ‑> onResume(), 포커스를 다시 얻고 포그
+라운드로 돌아옵니다.
+– Activity B: onStop() ‑> onDestroy()
