@@ -86,6 +86,10 @@ camera_module_t HAL_MODULE_INFO_SYM = {
 - 안드로이드는 프로세스간 데이터 전달 (IPC)에서 바인더를 통해 Parcel 객체를 전달
 - Parcelable은 Parcel에 객체를 write/read 할 수 있도록 해준다
 
+### Context 구조
+<img width="600" height="408" alt="image" src="https://github.com/user-attachments/assets/72ef5ee1-ce35-41a6-a9ac-5dde23a3cc1c" />
+
+
 ### ContextWrapper
 - ContextWrapper는 Context를 상속받고 있는 클래스로, Context 객체를 감싸서(wrapping) 래핑된 Context에 대한 호출을 위임하는 기능을 제공합니다.
 - 이는 원본 Context의 동작을 수정하거나 확장하기 위한 중간 계층 역할을 합니다.
@@ -120,6 +124,9 @@ class CustomThemeContextWrapper(base: Context) : ContextWrapper(base) {
   }
 ```
 
+### Application 클래스
+#### 앱 실행시 AppInitializer, Hilt Module, Application onCreate()의 순서를 나열해보세요
+
 ### Activity A, B 생명주기 흐름 순서
 Activity A와 Activity B의 생명주기 흐름 순서
 
@@ -146,5 +153,5 @@ Activity A와 Activity B의 생명주기 흐름 순서
 #### Activity 재생성시 생명주기에 대해 대답해보세요
 #### 재생성 시 데이터를 유지하는 방법
 #### 앱이 백그라운드에서 오래 존재하여 프로세스 우선순위에서 밀려 종료되는 경우, 다시 실행시 해당 데이터는 어떻게 복구될 수 있나요? 프로세스가 종료된것이 아닌가요?
-#### ActivityManagerService에 대해 아시나요?
-#### 앱을 처음 실행할때, 디바이스에서 수행되는 동작을 설명해보세요
+#### ActivityManagerService에 대해 아시나요? (링크)[https://github.com/chen-studio/Android-Manifest-Interview-Study/blob/main/week1/ActivityManagerService.md]
+#### 앱을 처음 실행할때, 디바이스에서 수행되는 동작을 설명해보세요(관련 키워드: zygote, AMS, ActivityThread.java)
