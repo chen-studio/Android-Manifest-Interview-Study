@@ -60,13 +60,16 @@ camera_module_t HAL_MODULE_INFO_SYM = {
 
 
 ### PendingIntent의 플래그
-- PendingIntent는 동작 방식과 시스템 또는 다른 컴포넌트와의 상호 작용 방식을 제어하는
-다양한 플래그를 지원합니다.
+- PendingIntent는 동작 방식과 시스템 또는 다른 컴포넌트와의 상호 작용 방식을 제어하는다양한 플래그를 지원합니다.
+
 • FLAG_UPDATE_CURRENT: 기존 PendingIntent를 새 데이터로 업데이트합니다.
+
 • FLAG_CANCEL_CURRENT: 새 PendingIntent를 만들기 전에 기존 PendingIntent를 취소합니
 다.
+
 • FLAG_IMMUTABLE: PendingIntent를 변경 불가능하게 만들어 수신자가 수정하는 것을
 방지합니다. (Android 12+ 에서 중요)
+
 • FLAG_ONE_SHOT: PendingIntent가 한 번만 사용될 수 있도록 보장합니다.
 
 #### 사용사례
@@ -119,18 +122,29 @@ class CustomThemeContextWrapper(base: Context) : ContextWrapper(base) {
 
 ### Activity A, B 생명주기 흐름 순서
 Activity A와 Activity B의 생명주기 흐름 순서
+
 • Activity A의 초기 실행
-– Activity A: 처음에 실행될 때 onCreate() ‑> onStart() ‑> onResume() 순서로
-호출 되고, 사용자가 Activity A와 상호 작용할 수 있습니다.
+
+– Activity A: 처음에 실행될 때 onCreate() ‑> onStart() ‑> onResume() 순서로 호출 되고, 사용자가 Activity A와 상호 작용할 수 있습니다.
+
 • Activity A에서 Activity B로 이동
-– Activity A: onPause(), UI를 일시 중지하고 시각적으로 보이는 상태 관련 리소스를
-해제합니다.
-– Activity B: onCreate() ‑> onStart() ‑> onResume(), 포커스를 가져오고 포그라
-운드 Activity가 됩니다.
-– Activity A: onStop(), Activity B가 Activity A를 완전히 오버레이 하는 순간
-호출됩니다.
+
+– Activity A: onPause(), UI를 일시 중지하고 시각적으로 보이는 상태 관련 리소스를해제합니다.
+
+– Activity B: onCreate() ‑> onStart() ‑> onResume(), 포커스를 가져오고 포그라운드 Activity가 됩니다.
+
+– Activity A: onStop(), Activity B가 Activity A를 완전히 오버레이 하는 순간호출됩니다.
+
 • Activity B에서 Activity A로 돌아오는 경우
+
 – Activity B: onPause()
-– Activity A: onRestart() ‑> onStart() ‑> onResume(), 포커스를 다시 얻고 포그
-라운드로 돌아옵니다.
+
+– Activity A: onRestart() ‑> onStart() ‑> onResume(), 포커스를 다시 얻고 포그라운드로 돌아옵니다.
+
 – Activity B: onStop() ‑> onDestroy()
+
+#### Activity 재생성시 생명주기에 대해 대답해보세요
+#### 재생성 시 데이터를 유지하는 방법
+#### 앱이 백그라운드에서 오래 존재하여 프로세스 우선순위에서 밀려 종료되는 경우, 다시 실행시 해당 데이터는 어떻게 복구될 수 있나요? 프로세스가 종료된것이 아닌가요?
+#### ActivityManagerService에 대해 아시나요?
+#### 앱을 처음 실행할때, 디바이스에서 수행되는 동작을 설명해보세요
