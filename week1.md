@@ -52,7 +52,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
 - Android Runtime (ART)은 Kotlin이나 Java에서 컴파일된 바이트코드를 사용하여 애플리케이션을 실행합니다.
 - ART는 최적화된 성능을 위해 Ahead‑of‑Time (AOT) 및 Just‑in‑Time (JIT) 컴파일을 지원합니다. 핵심 라이브러리는 데이터 구조, 파일 조작,
 스레딩 등을 위한 필수 API를 제공하여 앱 개발을 위한 포괄적인 환경을 제공합니다.
-#### 관련 키워드 (Cloud Profile, Baseline Profile, 앱 실행속도 단축방법 어떤것들이 있을지?)
+#### 관련 키워드 (ProfileGuidedOptimization, Cloud Profile, Baseline Profile, 앱 실행속도 단축방법 어떤것들이 있을지?)
 
 ### 안드로이드 시스템은 암시적 인텐트를 처리할 앱을 어떻게 결정하며, 적합한 애플리케이션을 찾지 못하면 어떻게 되나요?
 - 여러개인 경우 Chooser를 통해 실행할 적절한 앱을 직접 선택
