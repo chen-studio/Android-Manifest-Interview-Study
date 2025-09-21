@@ -47,3 +47,8 @@ val values = ContentValues().apply {
 contentResolver.insert(Uri.parse("content://com.example.myapp.provider/users"), values)
 ```
 
+### AppInitializer로서 ContentProvider의 사용 (FirebaseInitProvider)
+- ActivityThread가 Manifest에 등록된 ContentProvider를 실행하므로 Application에서 복잡한 로직을 사용하지 않고 분리 가능
+- 최근에는 Jetpack Startup 라이브러리의 Initializer를 사용하는게 더 좋음
+- 초기화 순서를 지정할 수 있으며 내부적으로 ContentProvider를 사용하는것은 동일함
+
